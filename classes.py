@@ -56,9 +56,23 @@ class Rede:
         for aresta in self.arestas:
             aresta.set_fluxo(0)
     
+    def adj(self, vertice: Vertice):
+        adjs = []
+        for aresta in self.arestas:
+            for vertices in self.vertices:
+                if(vertice == aresta.get_vertice_v and vertices == aresta.get_vertice_u):
+                    adjs.append(vertices)
+                elif(vertices == aresta.get_vertice_v and vertice == aresta.get_vertice_u):
+                    adjs.append(vertices)
+        return adjs
+    
+    def caminho_dfs(self, vertice: Vertice, visitados: list[Vertice]):
+        visitados.append(vertice)
+        for adjacencia in self.adj(vertice):
+            if adjacencia not in visitados:
+                self.caminho_dfs(self, adjacencia, visitados)
+               
 class RedeResidual(Rede):
-    def __init__(self):
-        self.definir_arestas_diretas
     
     def definir_arestas_diretas(self):
         for aresta in self.arestas:
@@ -73,8 +87,12 @@ class RedeResidual(Rede):
                 aresta.set_vertice_u = verticev
                 aresta.set_vertice_v = verticeu
                 aresta.set_capacidade(aresta.get_fluxo)
-                
-        
-                
-                
-            
+
+vertice1 = Vertice("Vertice1")
+vertice2 = Vertice("Vertice2")
+vertice3 = Vertice("Vertice3")
+vertice4 = Vertice("Vertice4") 
+
+aresta1 = Aresta(2,3,vertice1,vertice2)
+aresta2 = Aresta(3,5,vertice2,vertice3)
+aresta3 = Aresta(1,2,vertice2,vertice3)
