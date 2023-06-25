@@ -24,11 +24,17 @@ class Aresta:
     def set_capacidade(self, nova_capacidade):
         self.capacidade = nova_capacidade
     
-    def get_verticeu(self):
+    def get_vertice_u(self):
         return self.u
+    
+    def set_vertice_u(self, novo_vertice_u: Vertice):
+        self.u = novo_vertice_u
     
     def get_vertice_v(self):
         return self.v
+
+    def set_vertice_v(self, novo_vertice_v: Vertice):
+        self.v = novo_vertice_v
 
 class Rede:
     def __init__(self,vertices: list[Vertice],arestas: list[Aresta]):
@@ -62,6 +68,13 @@ class RedeResidual(Rede):
     def definir_arestas_contrarias(self):
         for aresta in self.arestas:
             if aresta.get_fluxo > 0 and aresta.get_capacidade == aresta.get_fluxo:
-                aresta.
+                verticev = aresta.get_vertice_v
+                verticeu = aresta.get_vertice_u
+                aresta.set_vertice_u = verticev
+                aresta.set_vertice_v = verticeu
+                aresta.set_capacidade(aresta.get_fluxo)
+                
+        
+                
                 
             
