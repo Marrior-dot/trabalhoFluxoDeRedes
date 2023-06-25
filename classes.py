@@ -1,10 +1,24 @@
 class Vertice:
     def __init__(self, content):
         self.content = content
+        self.cor = ""
+        self.antecessor = None
     
     def get_content(self):
         return self.content
     
+    def get_cor(self):
+        return self.cor
+    
+    def set_cor(self, nova_cor: int):
+        self.cor = nova_cor
+    
+    def get_antecessor(self):
+        return self.antecessor
+    
+    def set_antecessor(self, novo_antecessor):
+        self.antecessor = novo_antecessor
+        
 class Aresta:
     def __init__(self,ce,fe,u: Vertice,v: Vertice):
         self.fe = fe
@@ -62,10 +76,9 @@ class Rede:
     def adj(self, vertice: Vertice):
         adjs = []
         for aresta in self.arestas:
-            
-            if vertice == aresta.get_vertice_u:
+            if vertice == aresta.get_vertice_u():
                 adjs.append(aresta)
-            elif vertice == aresta.get_vertice_v:
+            elif vertice == aresta.get_vertice_v():
                 adjs.append(aresta)
             '''
             for vertices in self.vertices:
@@ -75,15 +88,54 @@ class Rede:
                     adjs.append(aresta)
                     '''
         return adjs
-
+    
+    def bfs(self, vertice_inicial: Vertice):
+        for vertice in self.get_vertices():
+            vertice.set_cor(0)
+            vertice.set_antecessor(None)
+            
+        vertice_inicial.set_cor(1)
+        
+        fila = [vertice_inicial]
+        
+        while len(fila) > 0:
+            vertice_atual = fila.pop(0)
+            print("aq1")
+            for adjacencia in self.adj(vertice_atual):
+                print("aq2")
+                # fila.append(adjacencia.u)
+                print(adjacencia.get_vertice_u().get_content())
+                if(adjacencia.get_vertice_u().get_cor() == 0):
+                    print("aq3")
+                    adjacencia.get_vertice_u().set_cor(1)
+                    adjacencia.get_vertice_u().set_antecessor(adjacencia.get_vertice_v)
+                    fila.append(adjacencia.get_vertice_u())
+                
+            vertice_inicial.set_cor(2)
+        
+        print(self.get_vertices()[3].get_antecessor())
+        
+            
+            
+        
+        
+    '''
+    def caminho_s_t(self, vertice: Vertice):
+        for aresta in self.adj(vertice):
+            if self.t == aresta.get_vertice_u():
+                return True
+            elif self.t == aresta.get_vertice_v():
+                return True
+            #print(aresta.get_vertice_u())
+            '''
+'''
     def caminho_dfs(self, visitados: list[Vertice]):
         for vertice in self.vertices:
             visitados.append(vertice)
             for adjacencia in self.adj(vertice):
                 if adjacencia not in visitados:
-                    
-                    self.caminho_dfs(self, adjacencia, visitados)
-
+                    self.caminho_dfs(self, visitados)
+'''
         
 class RedeResidual(Rede):
     
@@ -125,9 +177,16 @@ vertice4 = Vertice("Vertice4")
 aresta1 = Aresta(2,3,vertice1,vertice2)
 aresta2 = Aresta(3,5,vertice2,vertice3)
 aresta3 = Aresta(1,2,vertice2,vertice3)
+aresta4 = Aresta(2, 2, vertice3, vertice4)
 
 rede = Rede([vertice1,vertice2,vertice3,vertice4],[aresta1,aresta2,aresta3])
 rede_residual = RedeResidual([vertice1,vertice2,vertice3,vertice4],[aresta1,aresta2,aresta3])    
 
-print(rede.get_arestas())
-print(rede.adj(vertice1))
+rede.bfs(vertice1)
+
+#while '''escrever uma função aq''':
+    
+ #   for vertice in rede.get_vertices():
+  #      for aresta in rede.adj(vertice):
+   #         if aresta.get_capacidade - aresta.get_fluxo > 0:
+    #            aresta.set_capacidade( aresta.get_capacidade + (aresta.get_capacidade - aresta.set_fluxo))
