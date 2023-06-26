@@ -195,8 +195,26 @@ class RedeResidual(Rede):
         caminho_aumentante = self.get_caminho_aumentante()
         
         v2 = vertice_final
-        v1 = vertice_final.antecessor
+        v1 = vertice_final.get_antecessor()
+        
+        while v1 != self.vertices[0]:
+            for aresta in self.arestas:
+                if aresta.get_vertice_u() == v1 and aresta.get_vertice_v() == v2:
+                    caminho_aumentante.insert(0, aresta)
+            v2 = v1
+            v1 = v2.get_antecessor()
             
+            if v1 == None:  # testa para erro no caminho
+                return False
+            
+        return True
+    
+    def resetar_vertices_bfs(self):
+        for vertice in self.get_vertices():
+            vertice.set_cor(0)
+            vertice.set_antecessor(None)
+    
+    
 vertice1 = Vertice("Vertice1")
 vertice2 = Vertice("Vertice2")
 vertice3 = Vertice("Vertice3")
@@ -212,14 +230,14 @@ rede = Rede([vertice1,vertice2,vertice3,vertice4],[aresta1,aresta2,aresta3])
 rede_residual = RedeResidual(rede)
 
 while '''rede.bfs(vertice1)''':
+    '''
     fluxo_antigo = rede_residual.set_fluxo_rede(aresta1)
     for aresta in rede_residual.get_arestas_rede_residual():
         if aresta.get_fluxo() < fluxo_antigo:
             rede_residual.set_fluxo_rede(aresta.get_fluxo())
+       '''     
     for aresta in rede.get_arestas():
         if aresta.get_aresta_direta() == True:
-            aresta.set_fluxo(aresta.get_fluxo() + rede_residual.get_fluxo_rede())
-                
+            aresta.set_fluxo(aresta.get_fluxo() + rede_residual.get_fluxo_rede())     
         else:
             aresta.set_fluxo(aresta.get_fluxo() - rede_residual.get_fluxo_rede())  
-    rede.set_fluxo(rede.get_arestas() + rede_residual.get_fluxo_rede)
