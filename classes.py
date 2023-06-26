@@ -94,26 +94,27 @@ class Rede:
             vertice.set_cor(0)
             vertice.set_antecessor(None)
             
-        vertice_inicial.set_cor(1)
+        # vertice_inicial.set_cor(1)
         
         fila = [vertice_inicial]
         
         while len(fila) > 0:
             vertice_atual = fila.pop(0)
-            print("aq1")
+            # print("aq1")
             for adjacencia in self.adj(vertice_atual):
-                print("aq2")
-                # fila.append(adjacencia.u)
-                print(adjacencia.get_vertice_u().get_content())
-                if(adjacencia.get_vertice_u().get_cor() == 0):
+                # print("aq2")
+                # # fila.append(adjacencia.u)
+                # # print(adjacencia.get_vertice_u().get_content())
+                # print(self.adj(vertice_atual)[0].get_vertice_v().get_content())
+                if(adjacencia.get_vertice_v().get_cor() == 0):
                     print("aq3")
-                    adjacencia.get_vertice_u().set_cor(1)
-                    adjacencia.get_vertice_u().set_antecessor(adjacencia.get_vertice_v)
-                    fila.append(adjacencia.get_vertice_u())
+                    adjacencia.get_vertice_v().set_cor(1)
+                    adjacencia.get_vertice_v().set_antecessor(adjacencia.get_vertice_u())
+                    fila.append(adjacencia.get_vertice_v())
                 
             vertice_inicial.set_cor(2)
         
-        print(self.get_vertices()[3].get_antecessor())
+        print(self.get_vertices()[-1].get_antecessor().get_content())
         
             
             
@@ -176,8 +177,8 @@ vertice4 = Vertice("Vertice4")
 
 aresta1 = Aresta(2,3,vertice1,vertice2)
 aresta2 = Aresta(3,5,vertice2,vertice3)
-aresta3 = Aresta(1,2,vertice2,vertice3)
-aresta4 = Aresta(2, 2, vertice3, vertice4)
+aresta3 = Aresta(1,2,vertice3,vertice4)
+# aresta4 = Aresta(2, 2, vertice3, vertice4)
 
 rede = Rede([vertice1,vertice2,vertice3,vertice4],[aresta1,aresta2,aresta3])
 rede_residual = RedeResidual([vertice1,vertice2,vertice3,vertice4],[aresta1,aresta2,aresta3])    
