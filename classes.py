@@ -119,8 +119,9 @@ class Rede:
         
 class RedeResidual(Rede):
     
-    def __init__(self):
+    def __init__(self, vertices: list[Vertice], arestas: list[Aresta]):
        self.caminho_aumentante = []
+       super().__init__(vertices ,arestas)
     
     def get_fluxo_rede(self):
         return self.F
@@ -137,22 +138,32 @@ class RedeResidual(Rede):
     def get_arestas_rede_residual(self):
         return self.arestas
 
-    def definir_arestas_diretas(self):
+  #  def definir_arestas_diretas(self):
+   #     for aresta in self.arestas:
+    #        if aresta.get_capacidade - aresta.get_fluxo > 0:
+     #           aresta.set_capacidade( aresta.get_capacidade + (aresta.get_capacidade - aresta.set_fluxo))
+      #          aresta.set_aresta_direta()
+    
+    #def definir_arestas_contrarias(self):
+     #   for aresta in self.arestas:
+      #      if aresta.get_fluxo > 0 and aresta.get_capacidade == aresta.get_fluxo:
+       #         verticev = aresta.get_vertice_v
+        #        verticeu = aresta.get_vertice_u
+         #       aresta.set_vertice_u = verticev
+          #      aresta.set_vertice_v = verticeu
+           #     aresta.set_capacidade(aresta.get_fluxo)
+
+    def diferenciar_arestas(self):
         for aresta in self.arestas:
             if aresta.get_capacidade - aresta.get_fluxo > 0:
-                aresta.set_capacidade( aresta.get_capacidade + (aresta.get_capacidade - aresta.set_fluxo))
+                aresta.set_capacidade(aresta.get_capacidade + (aresta.get_capacidade - aresta.set_fluxo))
                 aresta.set_aresta_direta()
-    
-    def definir_arestas_contrarias(self):
-        for aresta in self.arestas:
-            if aresta.get_fluxo > 0 and aresta.get_capacidade == aresta.get_fluxo:
+            else:
                 verticev = aresta.get_vertice_v
                 verticeu = aresta.get_vertice_u
                 aresta.set_vertice_u = verticev
                 aresta.set_vertice_v = verticeu
                 aresta.set_capacidade(aresta.get_fluxo)
-                    
-                
     '''def caminho_dfs(self, visitados: list[Vertice]):
         for vertice in self.vertices:
             visitados.append(vertice)
@@ -225,19 +236,23 @@ aresta2 = Aresta(3,5,vertice2,vertice3)
 aresta3 = Aresta(1,2,vertice3,vertice4)
 # aresta4 = Aresta(2, 2, vertice3, vertice4)
 
-rede = Rede([vertice1,vertice2,vertice3,vertice4],[aresta1,aresta2,aresta3])
-#rede_residual = RedeResidual([vertice1,vertice2,vertice3,vertice4],[aresta1,aresta2,aresta3])    
-rede_residual = RedeResidual(rede)
+#rede = Rede([vertice1,vertice2,vertice3,vertice4],[aresta1,aresta2,aresta3])
+rede_residual = RedeResidual([vertice1,vertice2,vertice3,vertice4],[aresta1,aresta2,aresta3])    
+#rede_residual = RedeResidual()
 
-while '''rede.bfs(vertice1)''':
-    '''
+print(rede_residual.encontrar_caminho_aumentante())
+'''
+while rede.bfs(vertice1):
+    
     fluxo_antigo = rede_residual.set_fluxo_rede(aresta1)
     for aresta in rede_residual.get_arestas_rede_residual():
         if aresta.get_fluxo() < fluxo_antigo:
             rede_residual.set_fluxo_rede(aresta.get_fluxo())
-       '''     
+           
     for aresta in rede.get_arestas():
         if aresta.get_aresta_direta() == True:
             aresta.set_fluxo(aresta.get_fluxo() + rede_residual.get_fluxo_rede())     
         else:
             aresta.set_fluxo(aresta.get_fluxo() - rede_residual.get_fluxo_rede())  
+
+'''
